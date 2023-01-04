@@ -231,8 +231,8 @@ function moveBall(ball: Ball)
 {
   ball.previous.x = ball.position.x;
   ball.previous.y = ball.position.y;
-  if (ball.speed.y > 13)
-    ball.speed.y = 13;
+  if (ball.speed.y > 10)
+    ball.speed.y = 10;
   if (ball.speed.x > 15)
     ball.speed.x = 15;
   ball.position.x += ball.speed.x;
