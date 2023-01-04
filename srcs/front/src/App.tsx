@@ -181,13 +181,13 @@ function wallCollision(ball: Ball, state: GameState)
     {
       if (state.player1.input.left && state.player1.input.right)
       {
-        ball.speed.y = -ball.speed.y * (Math.random() * (3 - 1.2) + 1.2);
+        ball.speed.y = -ball.speed.y * (Math.random() * (2.2 - 1.2) + 1.2);
       }
       else if (state.player1.input.left === false && state.player1.input.right === false)
-        ball.speed.y = -ball.speed.y * (Math.random() * (1 - 0.4) + 0.4);
+        ball.speed.y = -ball.speed.y * (Math.random() * (1 - 0.6) + 0.6);
       else
         ball.speed.y = -ball.speed.y
-      ball.cooldown = 20;
+      ball.cooldown = 40;
     }
     if (((ball.previous.y - 10 < state.player2.paddle.position.y - paddleDimensions.y/2 && ball.position.y + 10 > state.player2.paddle.position.y - paddleDimensions.y / 2)
       || (ball.previous.y + 10 > state.player2.paddle.position.y + paddleDimensions.y/2 && ball.position.y - 10 < state.player2.paddle.position.y + paddleDimensions.y / 2))
@@ -195,13 +195,13 @@ function wallCollision(ball: Ball, state: GameState)
     {
       if (state.player2.input.left && state.player2.input.right)
       {
-        ball.speed.y = -ball.speed.y * (Math.random() * (3 - 1.2) + 1.2);
+        ball.speed.y = -ball.speed.y * (Math.random() * (2.2 - 1.2) + 1.2);
       }
       else if (state.player2.input.left === false && state.player2.input.right === false)
-        ball.speed.y = -ball.speed.y * (Math.random() * (1 - 0.4) + 0.4);
+        ball.speed.y = -ball.speed.y * (Math.random() * (1 - 0.6) + 0.6);
       else
         ball.speed.y = -ball.speed.y
-      ball.cooldown = 20;
+      ball.cooldown = 40;
     }
     else if (ball.position.y > gameWindowEnd.y - 10) {
       resetState(state);
@@ -220,14 +220,21 @@ function resetState(state: GameState) {
   state.player2.paddle.position.y = window.innerHeight / 2 - 495 + paddleDimensions.x / 2;
   state.ball.position.x = window.innerWidth / 2 - paddleDimensions.y;
   state.ball.position.y = window.innerHeight / 2 - paddleDimensions.y;
-  state.ball.speed.x = (Math.random() * (6 - 0.8) + 0.8);
-  state.ball.speed.y = (Math.random() * (5 - 1.5) + 1.5);
+  state.ball.speed.x = (Math.random() * (-6));
+  if (state.player1.score > state.player2.score)
+    state.ball.speed.y = (Math.random() * (5 - 1.5) + 1.5);
+  else
+    state.ball.speed.y = -(Math.random() * (5 - 1.5) + 1.5);
 }
 
 function moveBall(ball: Ball)
 {
   ball.previous.x = ball.position.x;
   ball.previous.y = ball.position.y;
+  if (ball.speed.y > 13)
+    ball.speed.y = 13;
+  if (ball.speed.x > 15)
+    ball.speed.x = 15;
   ball.position.x += ball.speed.x;
   ball.position.y += ball.speed.y;
   if (ball.cooldown > 0)
@@ -241,9 +248,9 @@ function movePlayer(player: Player) {
     if (player.input.left && player.input.right)
       player.paddle.speed.y = -4;
     else if (player.input.left && player.paddle.position.x > gameWindowBegin.x)
-      player.paddle.speed.x = -5;
+      player.paddle.speed.x = -8;
     else if (player.input.right && player.paddle.position.x < gameWindowEnd.x - paddleDimensions.x)
-      player.paddle.speed.x = 5;
+      player.paddle.speed.x = 8;
     else if (player.paddle.position.y + paddleDimensions.y < gameWindowEnd.y)
       player.paddle.speed.y = 2;
   }
@@ -252,9 +259,9 @@ function movePlayer(player: Player) {
     if (player.input.left && player.input.right)
       player.paddle.speed.y = 4;
     else if (player.input.left && player.paddle.position.x > gameWindowBegin.x)
-      player.paddle.speed.x = -5;
+      player.paddle.speed.x = -8;
     else if (player.input.right && player.paddle.position.x < gameWindowEnd.x - paddleDimensions.x)
-      player.paddle.speed.x = 5;
+      player.paddle.speed.x = 8;
     else if (player.paddle.position.y > gameWindowBegin.y)
       player.paddle.speed.y = -2;
   }
